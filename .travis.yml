@@ -14,4 +14,4 @@ before_install:
   - sudo apt-get install libpcre3-dev julia -y
 script:
   - julia -e 'Pkg.init(); run(`ln -s $(pwd()) $(Pkg.dir("SPICE"))`); Pkg.pin("SPICE"); Pkg.resolve()'
-  - julia -e 'using SPICE; @assert isdefined(:SPICE); @assert typeof(SPICE) === Module'
+  - julia test/runtests.jl

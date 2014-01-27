@@ -1,0 +1,34 @@
+* Bipolar Differential Amplifier With Current Mirror Load
+
+* Declarations
+.global vcc gnd
+
+q1 vy vi vx npn1
+q2 vo gnd vx npn1
+q3 vo vy vcc pnp1
+q4 vy vy vcc pnp1
+
+I1 vx nvcc dc=100u
+
+* Bias sources
+v1 vcc gnd dc=2.5
+v2 gnd nvcc dc=2.5
+
+* Sweep sources
+vin vi gnd dc=0
+
+.control
+
+dc vin -2.5 2.5 0.01
+wrdata 01-a vo vcc nvcc vx vy
+write 01-bin-a vo vcc nvcc vx vy
+
+dc vin -0.01 0.01 0.0001
+wrdata 01-b vo vcc nvcc vx vy
+
+.endc
+
+.model npn1 npn level=2 is=5f bf=200 br=0.005 rb=0 re=0 rc=0 mjc=0.2 vaf=130 tf=100p
+.model pnp1 pnp level=2 is=2f bf=50 br=0.005 rb=0 re=0 rc=0 mjc=0.2 vaf=50 tf=100p
+
+.end
